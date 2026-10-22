@@ -1,3 +1,8 @@
+/* ==========================================================================
+   Praktikum 4: Implementasi Aplikasi Web Dinamis Menggunakan PHP
+   Sistem Informasi Data Mahasiswa (SIMA) - Waktu Praktikum: 90 Menit
+   ========================================================================== */
+
 /* 1. Reset Global & CSS Variables */
 :root {
     --primary: #2563eb;
@@ -11,14 +16,14 @@
     --radius: 8px;
 }
 
-*, *:: before, *::after {
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Sagoe UI", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--text-main);
     background-color: var(--bg-body);
     line-height: 1.6;
@@ -29,8 +34,8 @@ body {
     max-width: 1000px;
     margin: 0 auto;
 }
-/* 2. Header & Navigasi (Flexbox Layout) */
 
+/* 2. Header & Navigasi (Flexbox Layout) */
 .site-header {
     background: linear-gradient(135deg, #1e40af, #2563eb);
     color: #ffffff;
@@ -48,6 +53,10 @@ body {
     border-radius: var(--radius);
 }
 
+.site-header h1 {
+    font-size: 1.6rem;
+}
+
 .site-header p {
     color: #bfdbfe;
     font-size: 0.95rem;
@@ -61,7 +70,7 @@ body {
     z-index: 100;
 }
 
-.site-nav ul{
+.site-nav ul {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
@@ -83,6 +92,7 @@ body {
     color: var(--primary);
     background-color: var(--primary-light);
 }
+
 /* 3. Section & Kartu Informasi */
 main {
     padding: 24px 0;
@@ -96,7 +106,7 @@ main {
     margin-bottom: 24px;
 }
 
-.section header {
+.section-header {
     margin-bottom: 16px;
     padding-bottom: 8px;
     border-bottom: 2px solid var(--primary-light);
@@ -123,7 +133,7 @@ main {
 
 .info-card h3 {
     font-size: 0.8rem;
-    columns: var(--text-muted);
+    color: var(--text-muted);
     text-transform: uppercase;
 }
 
@@ -131,8 +141,62 @@ main {
     font-size: 1.25rem;
     font-weight: 700;
 }
-/* 4. Penataan Tabel Data & Media */
 
+/* Alert / Flash Messages */
+.alert-box {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.alert-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+/* Toolbar & Pencarian */
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.search-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--primary);
+}
+
+.status-summary {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* 4. Penataan Tabel Data & Media */
 .table-responsive {
     overflow-x: auto;
     margin-top: 12px;
@@ -149,7 +213,6 @@ main {
     border-bottom: 1px solid var(--border);
     text-align: left;
     vertical-align: middle;
-
 }
 
 .data-table thead {
@@ -170,7 +233,7 @@ main {
 
 .badge {
     background-color: var(--primary-light);
-    columns: var(--primary);
+    color: var(--primary);
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 0.75rem;
@@ -185,6 +248,13 @@ main {
 .link-email:hover {
     text-decoration: underline;
 }
+
+.empty-row {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px !important;
+}
+
 /* 5. Formulir & Tombol */
 .app-form fieldset {
     border: 1px solid var(--border);
@@ -227,8 +297,7 @@ main {
 
 .form-input:focus, .form-select:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba (37, 99, 235, 0.15);
-
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .form-help {
@@ -250,12 +319,17 @@ main {
     border: none;
     cursor: pointer;
     text-decoration: none;
+    display: inline-block;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
 }
 
 .btn-primary {
     background-color: var(--primary);
     color: #ffffff;
-
 }
 
 .btn-primary:hover {
@@ -265,7 +339,6 @@ main {
 .btn-secondary {
     background-color: #e2e8f0;
     color: var(--text-main);
-
 }
 
 .btn-danger {
@@ -273,35 +346,42 @@ main {
     color: #ffffff;
 }
 
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* 6. Footer */
 .site-footer {
     background-color: #0f172a;
     color: #94a3b8;
     text-align: center;
     padding: 20px 0;
-    font-size: 0.85rem ;
+    font-size: 0.85rem;
     margin-top: auto;
 }
 
 .site-footer a {
     color: #60a5fa;
     text-decoration: none;
-
 }
 
+/* 7. Media Query Sederhana (Breakpoint Mobile 768px) */
 @media (max-width: 768px) {
-    .header-brand{
+    .header-brand {
         flex-direction: column;
         text-align: center;
     }
-    .info-grid{
+    .info-grid {
         flex-direction: column;
     }
     .form-grid {
         grid-template-columns: 1fr;
-
     }
     .site-nav ul {
         justify-content: center;
     }
-
+    .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
